@@ -18,3 +18,16 @@ project(
 
 enable_testing()
 add_subdirectory(src)
+
+
+
+set(
+    TEST_BIN_DIRECTORY "${CMAKE_BINARY_DIR}/src/$<CONFIGURATION>"
+)
+
+add_test(
+    NAME
+      first_test
+    COMMAND
+      "${TEST_BIN_DIRECTORY}/first_test"
+)

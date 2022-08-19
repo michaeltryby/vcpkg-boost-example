@@ -1,12 +1,14 @@
 
 
 
+include(./boost-test.cmake)
+
 add_executable(
-  test
-    test.cpp
+  first_test
+    first_test.cpp
 )
 
 target_link_libraries(
-  test
+  first_test
     ${Boost_LIBRARIES}
 )
