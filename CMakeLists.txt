@@ -11,18 +11,18 @@ endif()
 
 
 project(
-  boost-test
+  first-test
     VERSION 0.0.1
     LANGUAGES CXX
 )
 
 enable_testing()
-add_subdirectory(src)
+add_subdirectory(test)
 
 
 
 set(
-    TEST_BIN_DIRECTORY "${CMAKE_BINARY_DIR}/src/$<CONFIGURATION>"
+    TEST_BIN_DIRECTORY "${CMAKE_BINARY_DIR}/test/$<CONFIGURATION>"
 )
 
 add_test(
