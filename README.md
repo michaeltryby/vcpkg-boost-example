@@ -36,10 +36,10 @@ Minimal example that uses vcpkg to manage boost dependencies.
 \> vcpkg install boost-test:x64-windows
 ```
 
-3. Build and run project (Note change in toolchain path)
+3. Build and run project
 ```
 \> cd ..\build
-\> cmake .. -DCMAKE_TOOLCHAIN_FILE=<project path>\vcpkg\<package name>\scripts\buildsystems\vcpkg.cmake
+\> cmake .. -DCMAKE_TOOLCHAIN_FILE=<project path>\vcpkg\scripts\buildsystems\vcpkg.cmake
 \> cmake --build .
 \> test\Debug\first_test.exe
 ```
@@ -62,4 +62,12 @@ Minimal example that uses vcpkg to manage boost dependencies.
 3. Install dependencies from package
 ```
 \> nuget install <package name> -Source <store path>\local-store 
+```
+
+4. Build and run project (Note change in toolchain path)
+```
+\> cd ..\build
+\> cmake .. -DCMAKE_TOOLCHAIN_FILE=<project path>\vcpkg\<package name>\scripts\buildsystems\vcpkg.cmake
+\> cmake --build .
+\> test\Debug\first_test.exe
 ```
