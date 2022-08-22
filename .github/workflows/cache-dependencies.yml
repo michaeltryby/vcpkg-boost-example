@@ -1,0 +1,25 @@
+name: Cache Dependencies
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  cache_deps:
+    name: Cache Deps
+    runs-on: windows-2019
+
+    steps:
+    - name: Checkout vcpkg
+      uses: actions/checkout@v2
+      with:
+        repository: microsoft/vcpkg
+
+    - name: Bootstrap
+      run: ./vcpkg/bootstrap-vcpkg.bat
+
+    - name: Install
+      run: ./vcpkg/vcpkg install boost-test:x64-windows
+
+    - name: Package
+      run: ./vcpkg/vcpkg export boost-test:x64-windows --nuget
