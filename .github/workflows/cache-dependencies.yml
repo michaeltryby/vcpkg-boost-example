@@ -25,9 +25,12 @@ jobs:
       run: bootstrap-vcpkg.bat
 
     - name: Install and Package
+      env:
+        PACKAGE
       run: |
         vcpkg install boost-test:x64-windows
         vcpkg export boost-test:x64-windows --nuget
+        for /F "tokens=1 delims=." %p in ('dir *.nupkg /B') do set PACKAGE=%p
 
     - name: Publish
       env:
