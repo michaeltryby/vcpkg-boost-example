@@ -13,9 +13,6 @@ jobs:
         shell: cmd
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
-
     - name: Checkout vcpkg
       uses: actions/checkout@v3
       with:
