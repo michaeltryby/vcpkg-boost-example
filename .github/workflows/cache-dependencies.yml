@@ -24,8 +24,13 @@ jobs:
     - name: Bootstrap
       run: bootstrap-vcpkg.bat
 
-    - name: Install
-      run: vcpkg install boost-test:x64-windows
+    - name: Install and Package
+      run: |
+        vcpkg install boost-test:x64-windows
+        vcpkg export boost-test:x64-windows --nuget
 
-    - name: Package
-      run: vcpkg export boost-test:x64-windows --nuget
+    - name: Publish
+      env:
+        USERNAME: michaeltryby
+        REMOTE_STORE: "https://nuget.pkg.github.com/michaeltryby/index.json"
+      run: nuget add source --username ${{ env.USERNAME }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github ${{ env.REMOTE_STORE }}
