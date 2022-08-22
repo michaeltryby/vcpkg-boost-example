@@ -26,7 +26,7 @@ jobs:
 
     - name: Install and Package
       env:
-        PACKAGE
+        PACKAGE:
       run: |
         vcpkg install boost-test:x64-windows
         vcpkg export boost-test:x64-windows --nuget
