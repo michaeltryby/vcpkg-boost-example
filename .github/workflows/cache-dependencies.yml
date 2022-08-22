@@ -11,19 +11,20 @@ jobs:
     defaults:
       run:
         shell: cmd
-        working-directory: vcpkg
 
     steps:
     - name: Checkout repo
       uses: actions/checkout@v2
-      
+
     - name: Checkout vcpkg
       uses: actions/checkout@v2
       with:
         repository: microsoft/vcpkg
 
     - name: Bootstrap
-      run: bootstrap-vcpkg.bat
+      run: |
+        echo %CD%
+        bootstrap-vcpkg.bat
 
     - name: Install
       run: vcpkg install boost-test:x64-windows
