@@ -46,7 +46,7 @@ Minimal example that uses vcpkg to manage boost dependencies.
 
 ## Binary Caching
 
-0. vcpkg and boost-test installed 
+0. vcpkg and boost-test installed (classic mode)
 
 1. Export dependencies to package
 ```
@@ -71,3 +71,5 @@ Minimal example that uses vcpkg to manage boost dependencies.
 \> cmake --build .
 \> test\Debug\first_test.exe
 ```
+
+## GitHub Packages
