@@ -33,4 +33,4 @@ jobs:
       env:
         USERNAME: michaeltryby
         REMOTE_STORE: "https://nuget.pkg.github.com/michaeltryby/index.json"
-      run: nuget add source --username ${{ env.USERNAME }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github ${{ env.REMOTE_STORE }}
+      run: nuget sources add -Name github -Source ${{ env.REMOTE_STORE }} -Username ${{ env.USERNAME }} -Password ${{ secrets.GITHUB_TOKEN }}
