@@ -11,6 +11,7 @@ jobs:
     defaults:
       run:
         shell: cmd
+        working-directory: vcpkg
 
     steps:
     - name: Checkout vcpkg
