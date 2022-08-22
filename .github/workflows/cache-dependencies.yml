@@ -14,6 +14,9 @@ jobs:
         working-directory: vcpkg
 
     steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      
     - name: Checkout vcpkg
       uses: actions/checkout@v2
       with:
