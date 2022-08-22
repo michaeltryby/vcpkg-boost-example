@@ -39,4 +39,4 @@ jobs:
         REMOTE_STORE: "https://nuget.pkg.github.com/michaeltryby/index.json"
       run: |
         nuget sources add -Name github -Source ${{ env.REMOTE_STORE }} -Username ${{ env.USERNAME }} -Password ${{ secrets.GITHUB_TOKEN }}
-        nuget add ${{ env.PACKAGE }} -Source github
+        nuget add ${{ env.PACKAGE }} -Source ${{ env.REMOTE_STORE }}
