@@ -38,5 +38,5 @@ jobs:
       env:
         USERNAME: michaeltryby
         REMOTE_STORE: "https://nuget.pkg.github.com/michaeltryby/"
-      run: |
-        curl -vX PUT -u "${{ env.USERNAME }}:${{ secrets.ACCESS_TOKEN }}" -F package=${{ env.PACKAGE }} ${{ env.REMOTE_STORE }}
+      run: curl -vX PUT -u "${{ env.USERNAME }}:${{ secrets.ACCESS_TOKEN }}" -F package=@${{ env.PACKAGE }} ${{ env.REMOTE_STORE }}
+      shell: bash
