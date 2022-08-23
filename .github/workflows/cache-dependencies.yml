@@ -39,6 +39,4 @@ jobs:
         USERNAME: michaeltryby
         REMOTE_STORE: "https://nuget.pkg.github.com/michaeltryby/index.json"
       run: |
-        nuget sources add -Name github -Source ${{ env.REMOTE_STORE }} -Username ${{ env.USERNAME }} -Password ${{ secrets.ACCESS_TOKEN }}
-        nuget setapikey ${{ secrets.ACCESS_TOKEN }} -Source github
-        nuget push ${{ env.PACKAGE }} -Source github
+        curl -vX PUT -u "${{ env.USERNAME }}:${{ secrets.ACCESS_TOKEN }}" -F package=${{ env.PACKAGE }} ${{ env.REMOTE_STORE }}
