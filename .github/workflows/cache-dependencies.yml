@@ -35,6 +35,7 @@ jobs:
       env:
         REPO_URL: https://github.com/%GITHUB_REPOSITORY%.git
       run: |
+        move ../vcpkg.json ../vcpkg.json~
         vcpkg install boost-test:x64-windows
         vcpkg export boost-test:x64-windows --nuget
         for /F "tokens=*" %%p in ('dir *.nupkg /B') do echo PACKAGE=%%p>> %GITHUB_ENV%
