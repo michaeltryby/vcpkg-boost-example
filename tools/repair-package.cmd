@@ -10,12 +10,18 @@
 ::  7zip
 ::
 :: Required arguments:
-::  nupkg file
-::  repo URL
+::  "repo URL" (quoted)
+::
+:: Note: Run in same directory as PACKAGE
 ::
 
 setlocal
 
+
+:: check if on an Actions runner or local
+if not defined GITHUB_ENV (
+  set GITHUB_ENV=nul
+)
 
 :: check for requirements
 where 7z > nul && (
@@ -27,22 +33,23 @@ where 7z > nul && (
 
 :: process arguments
 if [%1]==[] ( goto ERROR
-) else ( set NUPKG=%1 )
-
-if [%2]==[] ( goto ERROR
-) else ( set REPO_URL="%2" )
+) else ( set REPO_URL=%1 )
 
 
-:: get package id
-for /F "delims=. tokens=1" %%p in ( 'echo %NUPKG%' ) do ( set PKG_ID=%%p
+:: get package name and id
+for /F "tokens=*" %%p in ( 'dir *.nupkg /B' ) do ( set PACKAGE=%%p )
+for /F "delims=. tokens=1" %%p in ( 'echo %PACKAGE%' ) do ( set PKG_ID=%%p
 ) || (
   echo ERROR: PKG_ID could not be determined & goto ERROR
 )
 echo CHECK: using PKG_ID = %PKG_ID%
 
+:: GitHub Actions
+echo PACKAGE=%PACKAGE%>> %GITHUB_ENV%
+
 
 :: extract manifest
-7z e %NUPKG% -o. %PKG_ID%.nuspec -r > nul && (
+7z e %PACKAGE% -o. %PKG_ID%.nuspec -r > nul && (
   echo CHECK: manifest file extraction successful
 ) || (
   echo ERROR: manifest extraction failed & goto ERROR
@@ -62,7 +69,7 @@ for /F tokens^=*^ delims^=^ eol^= %%n in ( %PKG_ID%.nuspec ) do (
 :: replace manifest
 move /y scratch.txt %PKG_ID%.nuspec
 
-7z u %NUPKG% %PKG_ID%.nuspec > nul && (
+7z u %PACKAGE% %PKG_ID%.nuspec > nul && (
   echo CHECK: manifest replacement successful
 ) || (
   echo ERROR: manifest replacement failed & goto ERROR
@@ -73,8 +80,8 @@ move /y scratch.txt %PKG_ID%.nuspec
 del /q %PKG_ID%.nuspec
 
 
-exit /b 0
+exit /B 0
 
 :ERROR
 echo ERROR: package repair exiting with errors
-exit /b 1
+exit /B 1
