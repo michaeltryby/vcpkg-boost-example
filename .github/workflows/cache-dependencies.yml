@@ -18,6 +18,9 @@ jobs:
         working-directory: vcpkg
 
     steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
     - name: Checkout vcpkg
       uses: actions/checkout@v3
       with:
@@ -29,14 +32,19 @@ jobs:
       run: bootstrap-vcpkg.bat
 
     - name: Install and Package
+      env:
+        REPO_URL: https://github.com/%GITHUB_REPOSITORY%.git
       run: |
         vcpkg install boost-test:x64-windows
         vcpkg export boost-test:x64-windows --nuget
         for /F "tokens=*" %%p in ('dir *.nupkg /B') do echo PACKAGE=%%p>> %GITHUB_ENV%
+        ../tools/repair-package.cmd %PACKAGE% %REPO_URL%
 
     - name: Publish
       env:
         USERNAME: michaeltryby
         REMOTE_STORE: "https://nuget.pkg.github.com/michaeltryby/"
-      run: curl -vX PUT -u "${{ env.USERNAME }}:${{ secrets.ACCESS_TOKEN }}" -F package=@${{ env.PACKAGE }} ${{ env.REMOTE_STORE }}
-      shell: bash
+      run: |
+        nuget sources add -Name github -Source ${{ env.REMOTE_STORE }} -Username ${{ env.USERNAME }} -Password ${{ secrets.ACCESS_TOKEN }}
+        nuget setapikey ${{ secrets.ACCESS_TOKEN }} -Source github
+        nuget push ${{ env.PACKAGE }} -Source github

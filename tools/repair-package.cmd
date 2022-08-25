@@ -49,7 +49,7 @@ echo CHECK: using PKG_ID = %PKG_ID%
 )
 
 
-:: create scratch manifest with repair
+:: create scratch manifest with repository element
 set "ELEMENT=    ^<repository type="git" url=%REPO_URL% /^>"
 set TARGET="  </metadata>"
 
@@ -61,8 +61,9 @@ for /F tokens^=*^ delims^=^ eol^= %%n in ( %PKG_ID%.nuspec ) do (
 
 :: replace manifest
 move /y scratch.txt %PKG_ID%.nuspec
+
 7z u %NUPKG% %PKG_ID%.nuspec > nul && (
-  echo CHECK: manifest file replaced successfully
+  echo CHECK: manifest replacement successful
 ) || (
   echo ERROR: manifest replacement failed & goto ERROR
 )
