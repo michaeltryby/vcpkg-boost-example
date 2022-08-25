@@ -32,19 +32,18 @@ jobs:
       run: bootstrap-vcpkg.bat
 
     - name: Install and Package
-      env:
-        REPO_URL: https://github.com/%GITHUB_REPOSITORY%.git
       run: |
         vcpkg install boost-test:x64-windows
         vcpkg export boost-test:x64-windows --nuget
-        for /F "tokens=*" %%p in ('dir *.nupkg /B') do echo PACKAGE=%%p>> %GITHUB_ENV%
-        ../tools/repair-package.cmd %PACKAGE% %REPO_URL%
+        for /F "tokens=*" %%p in ('dir *.nupkg /B') do ( echo PACKAGE=%%p>> %GITHUB_ENV% )
 
     - name: Publish
       env:
         USERNAME: michaeltryby
+        REPO_URL: "https://github.com/michaeltryby/vcpkg-boost-example.git"
         REMOTE_STORE: "https://nuget.pkg.github.com/michaeltryby/"
       run: |
+        ../tools/repair-package.cmd %PACKAGE% %REPO_URL%
         nuget sources add -Name github -Source ${{ env.REMOTE_STORE }} -Username ${{ env.USERNAME }} -Password ${{ secrets.ACCESS_TOKEN }}
         nuget setapikey ${{ secrets.ACCESS_TOKEN }} -Source github
         nuget push ${{ env.PACKAGE }} -Source github
