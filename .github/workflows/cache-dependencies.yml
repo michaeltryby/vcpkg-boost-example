@@ -33,7 +33,7 @@ jobs:
 
     - name: Install and Package
       env:
-        REPO_URL: https://github.com/michaeltryby/vcpkg-boost-example.git
+        REPO_URL: "https://github.com/michaeltryby/vcpkg-boost-example.git"
       run: |
         vcpkg install boost-test:x64-windows
         vcpkg export boost-test:x64-windows --nuget
