@@ -10,7 +10,7 @@
 ::  7zip
 ::
 :: Required arguments:
-::  "repo URL" (quoted)
+::  repo URL
 ::
 :: Note: Run in same directory as PACKAGE
 ::
@@ -33,7 +33,7 @@ where 7z > nul && (
 
 :: process arguments
 if [%1]==[] ( goto ERROR
-) else ( set REPO_URL=%1 )
+) else ( set "REPO_URL=%1" )
 
 
 :: get package name and id
@@ -57,12 +57,16 @@ echo PACKAGE=%PACKAGE%>> %GITHUB_ENV%
 
 
 :: create scratch manifest with repository element
-set "ELEMENT=    ^<repository type="git" url=%REPO_URL% /^>"
+set "ELEMENT=    ^<repositoryURL^>%REPO_URL%^</repositoryURL^>"
 set TARGET="  </metadata>"
 
 for /F tokens^=*^ delims^=^ eol^= %%n in ( %PKG_ID%.nuspec ) do (
-  if not "%%n" == %TARGET% (echo %%n >> scratch.txt )
-  if "%%n" == %TARGET% ( echo %ELEMENT% >> scratch.txt & echo %%n >> scratch.txt )
+  if not "%%n" == %TARGET% ( (echo %%n)>> scratch.txt )
+  if "%%n" == %TARGET% (
+  (
+    echo %ELEMENT%
+    echo %%n
+  )>> scratch.txt )
 )
 
 
