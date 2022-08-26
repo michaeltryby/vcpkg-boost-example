@@ -10,7 +10,7 @@
 ::  7zip
 ::
 :: Required arguments:
-::  "repo URL" (quoted)
+::  repo URL
 ::
 :: Note: Run in same directory as PACKAGE
 ::
@@ -57,7 +57,7 @@ echo PACKAGE=%PACKAGE%>> %GITHUB_ENV%
 
 
 :: create scratch manifest with repository element
-set "ELEMENT=    ^<repository type="git" url=%REPO_URL%^>^</repository^>"
+set "ELEMENT=    ^<repository type="git" url="%REPO_URL%"^>^</repository^>"
 set TARGET="  </metadata>"
 
 for /F tokens^=*^ delims^=^ eol^= %%n in ( %PKG_ID%.nuspec ) do (
