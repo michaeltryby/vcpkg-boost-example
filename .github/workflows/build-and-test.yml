@@ -40,4 +40,4 @@ jobs:
         cmake --build .
 
     - name: Test
-      run: test\Debug\first_test.exe
+      run: build\test\Debug\first_test.exe
