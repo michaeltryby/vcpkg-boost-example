@@ -39,6 +39,13 @@ jobs:
         vcpkg export boost-test:x64-windows --nuget
         ../tools/repair-package.cmd %REPO_URL%
 
+    - name: Upload artifacts
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: packaging-artifacts
+        path: vcpkg/*.nupkg
+
     - name: Publish
       env:
         USERNAME: michaeltryby
