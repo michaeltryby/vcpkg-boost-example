@@ -34,9 +34,10 @@ jobs:
     - name: Build
       env:
         TOOL_CHAIN_PATH: \scripts\buildsystems\vcpkg.cmake
+      run: |
         cd build
         cmake .. -DCMAKE_TOOLCHAIN_FILE=.\${{env.PACKAGE_NAME_LONG}}\scripts\buildsystems\vcpkg.cmake
         cmake --build .
 
     - name: Test
-        test\Debug\first_test.exe
+      run: test\Debug\first_test.exe
