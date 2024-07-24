@@ -50,7 +50,7 @@ jobs:
     - name: Publish
       env:
         USERNAME: michaeltryby
-        REMOTE_STORE: "https://nuget.pkg.github.com/michaeltryby/index.json"
+        REMOTE_STORE: "https://nuget.pkg.github.com/USEPA/index.json"
       run: |
         nuget sources add -Name github -Source ${{ env.REMOTE_STORE }} -Username ${{ env.USERNAME }} -Password ${{ secrets.ACCESS_TOKEN }}
         nuget setapikey ${{ secrets.ACCESS_TOKEN }} -Source github
