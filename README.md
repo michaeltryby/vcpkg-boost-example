@@ -53,15 +53,15 @@ Minimal example that uses vcpkg to manage boost dependencies.
 \> vcpkg export boost-test:x64-windows --nuget
 ```
 
-2. Setup local package store 
+2. Setup local package store
 ```
 \> vcpkg fetch nuget
-\> nuget add <package name>.<version>.nuget -Source <store path>\local-store
+\> nuget add <package name>.<version>.nuget -Source <abs store path>\local-store
 ```
 
 3. Install dependencies from package
 ```
-\> nuget install <package name> -Source <store path>\local-store 
+\> nuget install <package name> -Source <abs store path>\local-store
 ```
 
 4. Build and run project (Note change in toolchain path)
