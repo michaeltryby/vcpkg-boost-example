@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>$authors$</authors>
+    <owners>$owners$</owners>
+    <description>$description$</description>
+    <projectUrl>$repositoryUrl$</projectUrl>
+    <repository type="git" url="$repositoryUrl$" branch="$repoBranch$" commit="$repoCommit$" />
+    <tags>vcpkg boost</tags>
+    <!-- Optional:
+    <license type="expression">MIT</license>
+    <icon>icon.png</icon>
+    -->
+  </metadata>
+  <files>
+    <!-- Cross-platform globbing -->
+    <file src="**/*" target="." />
+  </files>
+</package>
